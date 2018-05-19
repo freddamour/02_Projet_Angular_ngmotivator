@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class QuotesComponent implements OnInit {
   quotes$: Observable<any[]>;
+  quoteList: AngularFireList<any>;
   data;
-  constructor(private afDb: AngularFirestore) {   }
+  constructor(private afDb: AngularFireDatabase) {   }
 
   ngOnInit() {
-this.quotes$ = this.afDb.collection('quotes').valueChanges(); // ['a', 'b']
+this.quotes$ = this.afDb.list('quotes').valueChanges(); // ['a', 'b']
 this.quotes$.subscribe( data => this.data = data);
 console.log(this.data);
 
